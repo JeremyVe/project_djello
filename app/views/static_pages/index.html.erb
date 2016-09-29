@@ -1,0 +1,15 @@
+
+<%= content_for(:angular) do %>
+	ng-app='Djello'
+<% end %>
+
+<!--  Add the angular content to the navbar if angular is active  -->
+
+<%= content_for(:angular_navbar) do %>
+	<div ng-show='currentUser' class='info'>
+		<span>Hello {{ currentUser.username }} ! </span>
+		<a href="/users/sign_out" data-method='delete'>Logout</a>
+	</div>
+<% end %>
+
+<div ui-view></div>
