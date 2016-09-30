@@ -1,0 +1,39 @@
+<div class='lists-container'>
+
+	<div class='list' ng-repeat='list in lists'>
+		<div class='header' ng-class='edit[list.id].edit.title ? "editing-header" : ""'>
+
+			<h3 ng-if='!edit[list.id].edit.title' ng-click='swipeEdit(list.id, "title")'>{{ list.title }}</h3>
+
+
+			<div class='edit-title-form' ng-if='edit[list.id].edit.title' >
+				<form>
+					<input type='text' ng-model='edit[list.id].title'>
+					<button ng-click='updateEdit(list.id, "title")'><i class='fa fa-pencil-square-o'></i></button>
+				</form>
+				<a class='delete' href="" ng-click='deleteList(list.id)'><i class='fa fa-trash-o'></i></a>
+				<a class='cancel' href="" ng-click='cancelEdit(list.id, "title")'>Cancel</a>
+			</div>
+
+		</div>
+
+		<div class='sub-header' ng-class='edit[list.id].edit.description ? "editing-sub-header" : ""'>
+			<p ng-if='!edit[list.id].edit.description' ng-click='swipeEdit(list.id, "description")'>{{ list.description }}</p>
+
+			<div class='edit-description-form' ng-if='edit[list.id].edit.description' >
+				<form>
+					<input type='text' ng-model='edit[list.id].description'>
+					<button ng-click='updateEdit(list.id, "description")'><i class='fa fa-pencil-square-o'></i></button>
+				</form>
+				<a class='cancel' href="" ng-click='cancelEdit(list.id, "description")'>Cancel</a>
+			</div>
+
+			<span ng-show='!edit[list.id].edit.description' >description</span>
+		</div>
+	</div>
+
+	<button  ng-click='createList()' class='add-list'>
+		<i class='fa fa-plus-square-o'></i>
+	</button>
+
+</div>

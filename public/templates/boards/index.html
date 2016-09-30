@@ -1,0 +1,14 @@
+<select ng-change='changeBoard(currentBoardId)' ng-model='currentBoardId'>
+
+	<option ng-repeat='board in boards' ng-selected='$index === boards.length-1' value='{{ board.id }}'>{{ board.title }}</option>
+</select>
+
+<p>{{ currentBoard.title }}</p>
+
+<button ng-click='createBoard()'>New Board</button>
+
+<button ng-click='deleteBoard(currentBoardId)'>Delete Board</button>
+
+
+
+<div ui-view></div>

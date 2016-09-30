@@ -14,22 +14,22 @@ $accent-color: #65e899;
 
 html {
 	min-height: 100%;
-	width: 100%;
+	min-width: 100%;
 }
 
 body {
-	background: url('/overlay-bg-djello.png'), linear-gradient($base-color, darken($base-color, 10%));
+	background: url('/overlay-bg-djello.png'), radial-gradient($base-color, darken($base-color, 15%));
 	background-color: $base-color;
 	font-family: Avenir;
 	margin: 0;
-	padding: 0;
+	padding: 60px 0;
 
 }
 
 // Nav
 
 nav {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	width: 100%;
 	height: 60px;
@@ -129,7 +129,7 @@ nav {
 	}
 
 	.form-field:focus {
-		border-bottom: 1px solid $accent-color;
+		border-bottom: 1px solid $base-color;
 		padding-top: 20px;
 		font-weight: 100;
 	}
