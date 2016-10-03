@@ -13,9 +13,12 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = current_user.boards.build(whitelisted_params)
+    @board = Board.new(whitelisted_params)
 
     if @board.save
+
+      current_user.boards <<  @board
+
       respond_to do |format|
         format.json { render :json => @board, status: 201 }
       end

@@ -1,6 +1,8 @@
 class Board < ActiveRecord::Base
 
-  belongs_to :user
+  has_many :boards_users
+
+  has_many :users, through: :boards_users
 
   has_many :lists
   

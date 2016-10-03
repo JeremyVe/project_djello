@@ -6,7 +6,7 @@ class CardsController < ApplicationController
                         .lists.find_by_id(params[:list_id]).cards.find_by_id(params[:id])
     if @card
       respond_to do |format|
-        format.json { render :json => @card.to_json(:include => :list), status: 200 }
+        format.json { render :json => @card.to_json(:include => [:list, :users]), status: 200 }
       end
     else
       respond_to do |format|
@@ -16,10 +16,12 @@ class CardsController < ApplicationController
   end
 
   def create
-    @card = current_user.boards.find_by_id(params[:board_id])
-                        .lists.find_by_id(params[:list_id]).cards.build(whitelisted_params)
+    @card = Board.find_by_id(params[:board_id]).lists.find_by_id(params[:list_id]).cards.build(whitelisted_params)
   
     if @card.save
+
+      current_user.cards << @card
+
       respond_to do |format|
         format.json { render :json => @card, status: 201 }
       end
@@ -41,6 +43,27 @@ class CardsController < ApplicationController
     else
       respond_to do |format|
         format.json { render nothing: true, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
+  def update_card_users
+    @card = Card.find_by_id(params[:id])
+    @user = User.find_by_id(params[:new_user_id])
+    @board = Board.find_by_id(params[:board_id])
+
+    if @user && @card
+
+      @card.users << @user
+      @board.users << @user
+
+      respond_to do |format|
+        format.json { render :json => @card, status: 200 }
+      end
+    else
+      respond_to do |format|
+        format.json { render :nothing => true, status: :unprocessable_entity }
       end
     end
   end

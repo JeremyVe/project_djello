@@ -8,8 +8,10 @@ Rails.application.routes.draw do
       resources :boards, only: [:index, :create, :show, :destroy] do
         resources :lists, only: [:index, :create, :update, :destroy] do
           resources :cards, only: [:show, :create, :update]
+          put '/cards/:id/update_card_users' => 'cards#update_card_users'
         end
       end
+      resources :users, only: [:index]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

@@ -35,7 +35,19 @@
 
 		<h4>Members</h4>
 
-		<a href="">Add Member</a>
+		<a href="" ng-click='searchMember = true'>Add a Member?</a>
+
+		<div ng-show='searchMember' class='search-member'>
+			<input type='text' ng-keyup='findUsers()' ng-model='searchParams'>
+			<a href="" ng-click='searchParams=""; searchMember="false"'>Cancel</a>
+			<ul>
+				<li ng-repeat='user in users' ng-click='addMember(user)'>{{ user.username }}</li>
+			</ul>
+		</div>
+
+		<ul>
+			<li ng-repeat='user in card.users'>{{ user.username }}</li>
+		</ul>
 
 		<hr>
 

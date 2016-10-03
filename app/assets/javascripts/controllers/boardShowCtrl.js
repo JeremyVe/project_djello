@@ -104,7 +104,8 @@ djello.controller('BoardShowCtrl',
 					boardId: board.id,
 					listId: listId,
 					cardId: cardId,
-					card: card
+					card: card,
+					board: $scope.board
 				}
 			}).then(function(modal) {
 				
