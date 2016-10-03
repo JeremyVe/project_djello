@@ -17,4 +17,5 @@
 //= require underscore-min.js
 //= require restangular.min.js
 //= require angular-ui-router.min.js
+//= require angular-modal-service.min.js
 //= require_tree .

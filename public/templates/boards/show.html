@@ -30,6 +30,21 @@
 
 			<span ng-show='!edit[list.id].edit.description' >description</span>
 		</div>
+
+	
+		<div ng-show='list.cards.length' class='cards-container'>
+			<div ng-repeat='card in list.cards' class="card" ng-click='showCard(list.id, card.id)'>
+				<h4>{{ card.title }}</h4>
+				<p>{{ card.description }}</p>
+			</div>
+		</div>
+
+		<div>
+			<a href="" ng-click='createCard(list.id)'>Add Card</a>
+		</div>
+
+
+
 	</div>
 
 	<button  ng-click='createList()' class='add-list'>

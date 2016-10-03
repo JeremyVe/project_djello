@@ -5,6 +5,7 @@ djello.factory('listService',
 
 	var _lists = [];
 
+
 	service.getLists = function(boardId) {
 		return Restangular.one('boards', boardId).all('lists').getList().then(function(lists) {
 			angular.copy(lists, _lists);

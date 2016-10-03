@@ -1,0 +1,45 @@
+<div class='modal' ng-click='close()'>
+	<div class='overlay' ng-click='$event.stopPropagation();'>
+
+		<h2 ng-click='edit.editing.title = !edit.editing.title' ng-show='!edit.editing.title'>{{ card.title }}</h2>
+
+		<div ng-show='edit.editing.title'>
+			<form>
+				<input type='text' ng-model='edit.title'>
+				<button ng-click='updateCard("title")'><i class='fa fa-pencil-square-o'></i></button>
+			</form>
+
+			<a href="" ng-click='cancelEdit("title")'>Cancel</a>
+			
+		</div>
+
+		<p>in list {{ card.list.title }}</p>
+
+		<a href="" ng-click='markCompleted()'>Mark Completed</a>
+
+		<hr>
+
+		<p ng-click='edit.editing.description = !edit.editing.description' ng-show='!edit.editing.description'>{{ card.description }}</p>
+
+		<div ng-show='edit.editing.description'>
+			<form>
+				<input type='text' ng-model='edit.description'>
+				<button ng-click='updateCard("description")'><i class='fa fa-pencil-square-o'></i></button>
+			</form>
+
+			<a href="" ng-click='cancelEdit("description")'>Cancel</a>
+			
+		</div>
+
+		<hr>
+
+		<h4>Members</h4>
+
+		<a href="">Add Member</a>
+
+		<hr>
+
+		<h4>Activities</h4>
+
+	</div>
+</div>

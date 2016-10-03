@@ -1,1 +1,2 @@
-var djello = angular.module('Djello', ['ui.router', 'restangular', 'Devise']);
+var djello = angular.module('Djello', 
+	['ui.router', 'restangular', 'Devise', 'angularModalService']);

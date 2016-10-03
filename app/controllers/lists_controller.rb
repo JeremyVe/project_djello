@@ -8,7 +8,7 @@ class ListsController < ApplicationController
     @lists = current_user.boards.find(params[:board_id]).lists
 
     respond_to do |format|
-      format.json { render :json => @lists, status: 200 }
+      format.json { render :json => @lists.to_json(include: :cards), status: 200 }
     end
   end
 
