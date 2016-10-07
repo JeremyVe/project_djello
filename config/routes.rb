@@ -12,6 +12,8 @@ Rails.application.routes.draw do
         end
       end
       resources :users, only: [:index]
+
+      resources :card_activities, only: [:create]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

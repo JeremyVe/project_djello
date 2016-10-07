@@ -64,5 +64,11 @@
 
 		<div class='separator'>Activities</div>
 
+		<div class='activities'>
+			<div ng-repeat='activity in card.card_activities | orderBy : "-created_at"'>
+				{{ activity.description }} <span> on {{ activity.created_at | date }}</span>
+			</div>
+		</div>
+
 	</div>
 </div>

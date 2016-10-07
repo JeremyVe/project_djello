@@ -44,6 +44,19 @@ djello.controller('CardCtrl',
 					$scope.card[field] = $scope.edit[field];
 					$scope.edit.editing[field] = !$scope.edit.editing[field];
 
+					_updateActivity(card, field, $scope.card[field])
+
+				})
+		}
+
+		var _updateActivity = function(card, field, content) {
+
+			cardService.updateActivity(card, field, content)
+				.then(function(activity) {
+					if (!card.card_activities) {card.card_activities = []}
+					card.card_activities.push(activity);
+
+					console.log(card);
 				})
 		}
 
@@ -71,6 +84,9 @@ djello.controller('CardCtrl',
 			userService.addMember(user, $scope.card, board).then(function(user) {
 
 				$scope.card.users.push(user);
+
+				_updateActivity($scope.card, 'user', user)
+
 				$scope.searchMember = false;
 			})
 

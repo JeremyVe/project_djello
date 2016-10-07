@@ -6,7 +6,7 @@ class CardsController < ApplicationController
                         .lists.find_by_id(params[:list_id]).cards.find_by_id(params[:id])
     if @card
       respond_to do |format|
-        format.json { render :json => @card.to_json(:include => [:list, :users]), status: 200 }
+        format.json { render :json => @card.to_json(:include => [:list, :users, :card_activities]), status: 200 }
       end
     else
       respond_to do |format|

@@ -40,8 +40,37 @@ djello.factory('cardService',
 
 		}
 
+		service.updateActivity = function(card, field, content) {
+
+			var description = _updateDescriptionForActivity(card, field, content);
+
+			return Restangular.all('card_activities').post({
+				card_id: card.id,
+				description: description
+			})
+		}
+
+		var _updateDescriptionForActivity = function(card, field, content) {
+
+			var description;
+
+			if (field == 'description') {
+				description = 'The description has been updated to ' + content;
+			} else if (field == 'user') {
+				description =  'Users List has been update with ' + content.username;
+			} else if(field == 'title') {
+				description = 'The title has been updated to ' + content;
+			}
+			return description;
+		}
+
 
 
 		return service;
 
 	}])
+
+
+
+
+
