@@ -1,3 +1,141 @@
 // Place all the styles related to the Boards controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$base-color: Steelblue;
+$accent-color: #c54545;
+$duration: 0.1s;
+
+.board-management {
+	display: flex;
+	z-index: 2;
+	position: fixed;
+	width: 100%;
+	justify-content: space-around;
+	height: 60px;
+	align-items: center;
+	background-color: rgba(255,255,255, 0.95);
+	box-shadow: 0 5px 20px 0 rgba(0,0,0,0.5);
+
+
+	.title-wrapper {
+		flex-grow: 2;
+		text-align: center;
+
+		.title {
+			color: #315a7d;
+			font-size: 26px;
+		}
+
+		form {
+			display: inline-block;
+		}
+
+		input {
+			outline: 0;
+			background-color: transparent;
+			color: $base-color;
+			border: 0;
+			border-bottom: 1px solid $base-color;
+			padding: 5px;
+			font-size: 20px;
+			font-weight: 100;
+
+		}
+
+		button {
+			outline: none;
+			border: 0;
+			background-color: white;
+			color: $base-color;
+			border-radius: 50%;
+			font-size: 20px;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			box-shadow: 0 2px 20px 0 rgba(0,0,0,0.5);
+			margin-right: 10px;
+		}
+
+		a {
+			text-decoration: none;
+			color: white;
+		}
+	}
+
+	.buttons-group {
+
+		button, select {
+			border: 0;
+			border-top: 3px solid $base-color;
+			padding: 10px 15px;
+			margin: 2px 5px;
+			background-color: white;
+			font-size: 14px;
+			color: $base-color;
+			box-shadow: 0 2px 5px 0 rgba(0,0,0,0.5);
+			transition: transform $duration, box-shadow $duration;
+		}
+
+		button:hover {
+			transform: scale(1.1);
+			box-shadow: 0 5px 20px 0 rgba(0,0,0,0.5);
+		}
+
+		select {
+			border-top: 3px solid white;
+			-webkit-appearance: none;
+			outline: none;
+			padding-right: 30px;
+			border-radius: 0;
+			background-color: $base-color;
+			color: white;
+		}
+
+		.select-wrapper {
+			display: inline-block;
+		    position: relative;
+		}
+
+		.select-wrapper:before {
+		    content: '\f0d7';
+		    font-family: FontAwesome;
+		    color: white;
+		    display: inline-block;
+		    position: absolute;
+		    right: 20px;
+		    top: 13px;
+		    pointer-events: none;
+		}
+
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.board-management {
+		z-index: 2;
+		flex-wrap: wrap;
+		height: 150px;
+		transition: height 0.1s;
+	}
+
+	.title-wrapper {
+		flex-grow: 1;
+	}
+
+	.buttons-group {
+		align-self: center;
+		flex-shrink: 0;
+	}
+}
+
+
+// notifications 
+
+
+
+.notice, .alert {
+	display: none;
+	margin: 0;
+}

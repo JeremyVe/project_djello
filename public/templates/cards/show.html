@@ -1,9 +1,10 @@
 <div class='modal' ng-click='close()'>
-	<div class='overlay' ng-click='$event.stopPropagation();'>
+
+	<div class='overlay' ng-hide='loading' ng-click='$event.stopPropagation();'>
 
 		<h2 ng-click='edit.editing.title = !edit.editing.title' ng-show='!edit.editing.title'>{{ card.title }}</h2>
 
-		<div ng-show='edit.editing.title'>
+		<div class='edit-title-card' ng-show='edit.editing.title'>
 			<form>
 				<input type='text' ng-model='edit.title'>
 				<button ng-click='updateCard("title")'><i class='fa fa-pencil-square-o'></i></button>
@@ -13,45 +14,55 @@
 			
 		</div>
 
-		<p>in list {{ card.list.title }}</p>
+		<div>
+			<p class='in-list'>in list :<span>{{ card.list.title }}</span></p>
 
-		<a href="" ng-click='markCompleted()'>Mark Completed</a>
+			<div class='mark-completed'>
+				<a href="" ng-click='markCompleted()'><i class='fa fa-check-circle-o'></i>Mark Completed</a>
+			</div>
+		</div>
+		
 
-		<hr>
+		<div class='separator'>Description</div>
 
-		<p ng-click='edit.editing.description = !edit.editing.description' ng-show='!edit.editing.description'>{{ card.description }}</p>
+		<div class='description'>
+			<p ng-click='edit.editing.description = !edit.editing.description' ng-show='!edit.editing.description'>{{ card.description }}</p>
 
-		<div ng-show='edit.editing.description'>
-			<form>
-				<input type='text' ng-model='edit.description'>
-				<button ng-click='updateCard("description")'><i class='fa fa-pencil-square-o'></i></button>
-			</form>
+			<div ng-show='edit.editing.description'>
+				<form>
+					<input type='text' ng-model='edit.description'>
+					<button ng-click='updateCard("description")'><i class='fa fa-pencil-square-o'></i></button>
+				</form>
 
-			<a href="" ng-click='cancelEdit("description")'>Cancel</a>
-			
+				<a href="" ng-click='cancelEdit("description")'>Cancel</a>
+				
+			</div>
 		</div>
 
-		<hr>
+		<div class='separator'>Members</div>
 
-		<h4>Members</h4>
+		<div class='members'>
+			<div class='add-member'>
+				<a href="" ng-click='searchMember = true'><i class='fa fa-users'></i>Add a Member?</a>
+			</div>
 
-		<a href="" ng-click='searchMember = true'>Add a Member?</a>
+			<div ng-show='searchMember' class='search-member'>
+				<input type='text' placeholder='Find Users' ng-keyup='findUsers()' ng-model='searchParams'>
+				<a href="" ng-click='searchParams=""; searchMember=false'>Cancel</a>
+				<ul>
+					<li ng-repeat='user in users' ng-click='addMember(user)'>
+						<i class='fa fa-user-plus'></i>{{ user.username }}</li>
+				</ul>
+			</div>
 
-		<div ng-show='searchMember' class='search-member'>
-			<input type='text' ng-keyup='findUsers()' ng-model='searchParams'>
-			<a href="" ng-click='searchParams=""; searchMember="false"'>Cancel</a>
+			<div class='users-separator'><i class='fa fa-dot-circle-o'></i></div>
+
 			<ul>
-				<li ng-repeat='user in users' ng-click='addMember(user)'>{{ user.username }}</li>
+				<li ng-repeat='user in card.users'><i class='fa fa-user'></i>{{ user.username }}</li>
 			</ul>
-		</div>
+		</members>
 
-		<ul>
-			<li ng-repeat='user in card.users'>{{ user.username }}</li>
-		</ul>
-
-		<hr>
-
-		<h4>Activities</h4>
+		<div class='separator'>Activities</div>
 
 	</div>
 </div>

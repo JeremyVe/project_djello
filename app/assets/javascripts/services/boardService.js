@@ -6,43 +6,61 @@ djello.factory('boardService',
 
 	var _boards = [];
 
+
+
 	service.getBoards = function() {
-		Restangular.all('boards').getList()
+		return Restangular.all('boards').getList()
 			.then(function(boards) {
 				angular.copy(boards, _boards);
+		}).then(function() {
+			return _boards;	
 		})
-		return _boards;
 	}
+
+
 
 	service.createBoard = function() {
 		return Restangular.all('boards').post({
 			board: {
-				title: 'new Board'
+				title: 'my new Board'
 			}
 		}).then(function(board) {
 			_boards.push(board);
+			return board;
 		})
 	}
+
+
 
 	service.getBoard = function(id) {
 		return Restangular.one('boards', id).get();
 	}
 
 
+
 	service.deleteBoard = function(id) {
 
-		var board = _.find(_boards, function(board) { return board['id'] == id });
+		var board = _.find(_boards, function(board) { return board.id == id });
 
 		return board.remove().then(function(response) {
 			
+
 			var index;
 			for (var i = 0; i < _boards.length; i++) {
-				if (_boards[i].id === id) { return index = i }
+				console.log(i);
+				if (_boards[i].id == id) { 
+					index = i;
+					break;
+				}
 			}
+
 			_boards.splice(index, 1);
-			return true;
+
+			return _boards;
 		})
 	}
+
+
 
 	return service;
 

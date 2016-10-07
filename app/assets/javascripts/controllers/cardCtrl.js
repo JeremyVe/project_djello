@@ -1,10 +1,17 @@
 djello.controller('CardCtrl', 
-	['$scope', 'cardService', '$rootScope', 'boardId', 'listId', 'cardId', 'card', 'board', 'close', 'userService',
-	function($scope, cardService, $rootScope, boardId, listId, cardId, card, board, close, userService) {
+	['$scope', 'cardService', 'userService', '$rootScope', 'board', 'listId', 'cardId', 'close', 
+	function($scope, cardService, userService, $rootScope, board, listId, cardId, close) {
 
 
-		cardService.getCard(boardId, listId, cardId).then(function(card) {
+
+		$scope.loading = true;
+
+
+
+		cardService.getCard(board.id, listId, cardId).then(function(card) {
 			$scope.card = card;
+
+			$scope.loading = false;
 
 			$scope.edit = {
 				title: card.title,
@@ -16,28 +23,39 @@ djello.controller('CardCtrl',
 			}
 		})
 
+
 		$scope.users = [];
+
+
+
 
 		$scope.cancelEdit = function(field) {
 			$scope.edit[field] = $scope.card[field];
 			$scope.edit.editing[field] = !$scope.edit.editing[field];
 		}
 
+
+
 		$scope.updateCard = function(field) {
-			cardService.updateCard($scope.card, boardId, listId, field, $scope.edit[field])
+
+			cardService.updateCard($scope.card, board.id, $scope.card.list_id, field, $scope.edit[field])
 				.then(function(card) {
-					$rootScope.$broadcast('card.update', card, listId);
+					$rootScope.$broadcast('card.update', card, card.list_id);
 					$scope.card[field] = $scope.edit[field];
 					$scope.edit.editing[field] = !$scope.edit.editing[field];
+
 				})
 		}
 
+
+
 		$scope.markCompleted = function() {
 			$scope.card.put({completed: true}).then(function() {
-				$rootScope.$broadcast('card.completed', card.id, listId);
+				$rootScope.$broadcast('card.completed', $scope.card.id, $scope.card.list_id);
 				$scope.close();
 			})
 		}
+
 
 
 		$scope.findUsers = function() {
@@ -47,9 +65,17 @@ djello.controller('CardCtrl',
 				})
 		}
 
+
+
 		$scope.addMember = function(user) {
-			userService.addMember(user, $scope.card, board);
+			userService.addMember(user, $scope.card, board).then(function(user) {
+
+				$scope.card.users.push(user);
+				$scope.searchMember = false;
+			})
+
 		}
+
 
 
 		$scope.close = function() {

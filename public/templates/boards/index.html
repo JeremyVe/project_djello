@@ -1,14 +1,49 @@
-<select ng-change='changeBoard(currentBoardId)' ng-model='currentBoardId'>
+<div class='board-container'>
 
-	<option ng-repeat='board in boards' ng-selected='$index === boards.length-1' value='{{ board.id }}'>{{ board.title }}</option>
-</select>
+	<!-- loading icon |  Have to dig deeper in how to set properly the loading part -->
 
-<p style='color: white; font-size: 25px;'>HELLLO     {{ currentBoard.board }}</p>
-
-<button ng-click='createBoard()'>New Board</button>
-
-<button ng-click='deleteBoard(currentBoardId)'>Delete Board</button>
+	<div  ng-show='loading'>
+		<span class='loading'></span>
+		<span class='overlay-loading'></span>
+	</div>
 
 
 
-<div ui-view></div>
+	
+	<div class='board-management'>
+
+		<div class='title-wrapper'>
+			<p class='title' ng-click='current.edit= !current.edit' ng-show='boards.length > 0 && !current.edit'>{{ current.board.title }}</p>
+
+			<div ng-show='current.edit'>
+				<form>
+					<input type='text' ng-model='current.editTitle'>
+					<button ng-click='updateBoard()'><i class='fa fa-pencil-square-o'></i></button>
+				</form>
+				<a href="" ng-click='cancelEdit()'>Cancel</a>
+			</div>
+		</div>
+
+
+
+		<div class='buttons-group'>
+			<button ng-click='createBoard()'>Create Board</button>
+
+			<button ng-show='boards.length > 0' ng-click='deleteBoard(current.id)'>Delete Board</button>
+
+
+			<div class='select-wrapper'>
+				<select ng-change='changeBoard(current.id)' ng-model='current.id' >
+					<option ng-repeat='board in boards' ng-selected='current.id === board.id' value='{{ board.id }}'>
+						{{ board.title }}
+					</option>
+
+				</select>
+			</div>
+
+		</div>
+
+		<hr>
+
+	</div>
+</div>

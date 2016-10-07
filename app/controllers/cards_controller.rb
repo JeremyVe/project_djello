@@ -20,6 +20,7 @@ class CardsController < ApplicationController
   
     if @card.save
 
+
       current_user.cards << @card
 
       respond_to do |format|
@@ -59,7 +60,7 @@ class CardsController < ApplicationController
       @board.users << @user
 
       respond_to do |format|
-        format.json { render :json => @card, status: 200 }
+        format.json { render :json => @user, status: 200 }
       end
     else
       respond_to do |format|

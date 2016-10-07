@@ -5,6 +5,8 @@ djello.factory('cardService',
 
 		var _card;
 
+
+
 		service.createCard = function(boardId, listId) {
 			return Restangular.one('boards', boardId).one('lists', listId).all('cards').post({
 				card: {
@@ -16,7 +18,10 @@ djello.factory('cardService',
 			})
 		}
 
+
+
 		service.getCard = function(boardId, listId, cardId) {
+			console.log('board id: '+ boardId, 'list id :' + listId, 'card id: ' + cardId);
 			return Restangular.one('boards', boardId).one('lists', listId).one('cards', cardId).get()
 				.then(function(card) {
 					_card = card;
@@ -25,6 +30,8 @@ djello.factory('cardService',
 				})
 		}
 
+
+
 		service.updateCard = function(card, boardId, listId, field, key) {
 
 			card[field] = key;
@@ -32,6 +39,8 @@ djello.factory('cardService',
 			return card.put();
 
 		}
+
+
 
 		return service;
 

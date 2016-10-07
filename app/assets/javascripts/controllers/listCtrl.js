@@ -1,13 +1,14 @@
-djello.controller('BoardShowCtrl', 
+djello.controller('ListCtrl', 
 	['$scope', 'board', 'listService', 'lists', '_', 'cardService', 'ModalService',
 	function($scope, board, listService, lists, _, cardService, ModalService) {
 
 		$scope.board = board;
-
 		$scope.lists = lists;
 
+
+
 		$scope.$on('card.update', function(event, card, listId) {
-			var list = _.find($scope.lists, function(list) { return list.id === listId })
+			var list = _findList(listId);
 			for (var i = 0; i < list.cards.length; i++) {
 				if ( list.cards[i].id === card.id ) {
 					list.cards[i] = card;
@@ -16,14 +17,19 @@ djello.controller('BoardShowCtrl',
 			}
 		})
 
+
+
+
 		$scope.$on('card.completed', function(event, cardId, listId) {
-			var list = _.find($scope.lists, function(list) { return list.id === listId })
-			var index = _.indexOf(list.cards, function(card) { return card.id === cardId })
+			var list = _findList(listId);
+			var index = _.indexOf(list.cards, function(card) { return card.id == cardId })
 			list.cards.splice(index, 1);
 		})
 
 
 // Create Edit list to permit in place editing
+
+
 
 		$scope.edit = {};
 
@@ -40,10 +46,14 @@ djello.controller('BoardShowCtrl',
 			}
 		}
 
+
+
 // create / swipe / cancel / update actions link to editing a list
 
 
+
 		$scope.createList = function() {
+			console.log(board);
 			listService.createList(board.id).then(function(list) {
 				$scope.edit[list.id] = {
 					title: list.title,
@@ -56,18 +66,45 @@ djello.controller('BoardShowCtrl',
 			})
 		}
 
-		$scope.swipeEdit = function(id, field) {
+
+
+		$scope.deleteList = function(id) {
+
+			listService.deleteList(id);			
+		}
+
+
+
+
+		$scope.createCard = function(listId) {
+			cardService.createCard(board.id, listId).then(function(card) {
+				var list = _findList(listId);
+
+				if (!list.cards) { list.cards = [] }
+
+				list.cards.push(card);
+			})
+		}
+
+
+
+
+		$scope.switchEditMode = function(id, field) {
 			$scope.edit[id].edit[field] = !$scope.edit[id].edit[field];
 		}
 
+
+
 		$scope.cancelEdit = function(id, field) {
-			var list = _.find($scope.lists, function(list) { return list.id === id });
+			var list = _findList(id);
 			$scope.edit[id][field] = list[field];
-			$scope.swipeEdit(id, field);
+			$scope.switchEditMode(id, field);
 		}
 
+
+
 		$scope.updateEdit = function(id, field) {
-			var list = _.find($scope.lists, function(list) { return list.id === id });
+			var list = _findList(id);
 			
 			list[field] = $scope.edit[id][field];
 
@@ -77,35 +114,24 @@ djello.controller('BoardShowCtrl',
 				list.put( {title: list[field]} );
 			}
 
-			$scope.swipeEdit(id, field);
+			$scope.switchEditMode(id, field);
 		}
 
-		$scope.deleteList = function(id) {
+		
 
-			listService.deleteList(id);			
-		}
-
-		$scope.createCard = function(listId) {
-			cardService.createCard(board.id, listId).then(function(card) {
-				var list = _.find($scope.lists, function(list) { return list.id === listId });
-				if (!list.cards) { list.cards = [] }
-				list.cards.push(card);
-			})
-		}
 
 		$scope.showCard = function(listId, cardId) {
 
-			var card = cardService.getCard(board.id, listId, cardId);
+			var list = _findList(listId);
+			var card = _.find(list.cards, function(card) {return card.id == cardId});
 
 			ModalService.showModal({
 				templateUrl: '/templates/cards/show.html',
 				controller: 'CardCtrl',
 				inputs: {
-					boardId: board.id,
+					board: $scope.board,
 					listId: listId,
-					cardId: cardId,
-					card: card,
-					board: $scope.board
+					cardId: cardId
 				}
 			}).then(function(modal) {
 				
@@ -113,6 +139,12 @@ djello.controller('BoardShowCtrl',
 					console.log('modal closed!');
 				})
 			})
+		}
+
+
+
+		function _findList(id) {
+			return _.find($scope.lists, function(list) { return list.id === id });
 		}
 	}])
 

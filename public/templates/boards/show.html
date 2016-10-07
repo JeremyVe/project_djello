@@ -1,9 +1,13 @@
 <div class='lists-container'>
 
+<!-- List Loop -->
+
 	<div class='list' ng-repeat='list in lists'>
+
+<!-- List Header -->
 		<div class='header' ng-class='edit[list.id].edit.title ? "editing-header" : ""'>
 
-			<h3 ng-if='!edit[list.id].edit.title' ng-click='swipeEdit(list.id, "title")'>{{ list.title }}</h3>
+			<h3 ng-if='!edit[list.id].edit.title' ng-click='switchEditMode(list.id, "title")'>{{ list.title }}</h3>
 
 
 			<div class='edit-title-form' ng-if='edit[list.id].edit.title' >
@@ -17,13 +21,18 @@
 
 		</div>
 
+<!-- List Sub Header -->
+
 		<div class='sub-header' ng-class='edit[list.id].edit.description ? "editing-sub-header" : ""'>
-			<p ng-if='!edit[list.id].edit.description' ng-click='swipeEdit(list.id, "description")'>{{ list.description }}</p>
+
+			<p ng-if='!edit[list.id].edit.description' ng-click='switchEditMode(list.id, "description")'>
+				{{ list.description }}
+			</p>
 
 			<div class='edit-description-form' ng-if='edit[list.id].edit.description' >
 				<form>
-					<input type='text' ng-model='edit[list.id].description'>
-					<button ng-click='updateEdit(list.id, "description")'><i class='fa fa-pencil-square-o'></i></button>
+					<input id='input' type='text' ng-model='edit[list.id].description'>
+					<button class='button-description' ng-click='updateEdit(list.id, "description")'><i class='fa fa-pencil-square-o'></i></button>
 				</form>
 				<a class='cancel' href="" ng-click='cancelEdit(list.id, "description")'>Cancel</a>
 			</div>
@@ -31,21 +40,28 @@
 			<span ng-show='!edit[list.id].edit.description' >description</span>
 		</div>
 
+
+<!-- Card Loop -->
 	
 		<div ng-show='list.cards.length' class='cards-container'>
 			<div ng-repeat='card in list.cards' class="card" ng-click='showCard(list.id, card.id)'>
+
+				<div class='top-border'></div>
+				
 				<h4>{{ card.title }}</h4>
 				<p>{{ card.description }}</p>
 			</div>
 		</div>
 
 		<div>
-			<a href="" ng-click='createCard(list.id)'>Add Card</a>
+			<a class='add-card' href="" ng-click='createCard(list.id)'>Add Card</a>
 		</div>
 
 
 
 	</div>
+
+<!-- List add button -->
 
 	<button  ng-click='createList()' class='add-list'>
 		<i class='fa fa-plus-square-o'></i>

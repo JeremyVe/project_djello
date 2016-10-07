@@ -6,6 +6,8 @@ djello.factory('listService',
 	var _lists = [];
 
 
+
+
 	service.getLists = function(boardId) {
 		return Restangular.one('boards', boardId).all('lists').getList().then(function(lists) {
 			angular.copy(lists, _lists);
@@ -13,6 +15,8 @@ djello.factory('listService',
 			return _lists;
 		})
 	}
+
+
 
 	service.createList = function(boardId) {
 		return Restangular.one('boards', boardId).all('lists').post({
@@ -25,6 +29,8 @@ djello.factory('listService',
 			return list;
 		})
 	}
+
+
 
 	service.deleteList = function(id) {
 
@@ -39,6 +45,8 @@ djello.factory('listService',
 			})
 
 	}
+
+
 
 	return service;
 

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   scope :api do
     scope :v1 do
-      resources :boards, only: [:index, :create, :show, :destroy] do
+      resources :boards, only: [:index, :create, :show, :update, :destroy] do
         resources :lists, only: [:index, :create, :update, :destroy] do
           resources :cards, only: [:show, :create, :update]
           put '/cards/:id/update_card_users' => 'cards#update_card_users'

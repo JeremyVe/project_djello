@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_board, only: [:show, :destroy]
+  before_action :set_board, only: [:show, :update, :destroy]
 
   respond_to :json
 
@@ -33,6 +33,18 @@ class BoardsController < ApplicationController
     
     respond_to do |format|
       format.json { render :json => @board, status: 200 }
+    end
+  end
+
+  def update
+    if @board.update(title: params[:title])
+      respond_to do |format|
+        format.json { render :json => @board, status: 200 }
+      end
+    else
+      respond_to do |format|
+        format.json { render nothing: true, status: :unprocessable_entity }
+      end
     end
   end
 
