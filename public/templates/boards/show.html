@@ -2,7 +2,7 @@
 
 <!-- List Loop -->
 
-	<div class='list' ng-repeat='list in lists'>
+	<div class='list' ng-repeat='list in lists track by $index'>
 
 <!-- List Header -->
 		<div class='header' ng-class='edit[list.id].edit.title ? "editing-header" : ""'>
@@ -44,7 +44,7 @@
 <!-- Card Loop -->
 	
 		<div ng-show='list.cards.length' class='cards-container'>
-			<div ng-repeat='card in list.cards' class="card" ng-click='showCard(list.id, card.id)'>
+			<div ng-repeat='card in list.cards track by $index' class="card" ng-click='showCard(list.id, card.id)'>
 
 				<div class='top-border'></div>
 				

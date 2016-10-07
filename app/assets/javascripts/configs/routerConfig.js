@@ -14,7 +14,7 @@ djello.config(
 							controller: 'BoardCtrl'
 						},
 						'': {
-							template: '<div style="color: white;">Select a Board or Create a new One !</div>'
+							templateUrl: 'templates/boards/no-board.html'
 						}
 					},
 					resolve: {

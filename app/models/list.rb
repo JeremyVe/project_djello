@@ -3,5 +3,5 @@ class List < ActiveRecord::Base
 
   has_many :cards,-> { where :completed => false }, class_name: 'Card'
 
-  has_many :all_cards, class_name: 'Card'
+  has_many :all_cards, class_name: 'Card', dependent: :destroy
 end
